@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Function to check if pip is installed
+check_pip_installed() {
+    if ! command -v pip > /dev/null; then
+        local msg="pip is not installed or not found in PATH. Please install pip before running this script."
+        echo "$msg"
+        log_error "$msg"  # Assuming log_error function can handle a single argument
+        exit_gracefully
+    fi
+}
 
 # Function to check if a package is installed
 package_installed() {
@@ -49,6 +58,9 @@ exit_gracefully() {
 
 # Trap Ctrl+C and exit gracefully
 trap exit_gracefully SIGINT
+
+# Check if pip is installed
+check_pip_installed
 
 # Inform the user about the process
 echo "Starting the installation process..."
