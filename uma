@@ -166,8 +166,12 @@ def update_files():
     for filename, url in urls.items():
         response = requests.get(url)
         response.raise_for_status()  # Ensure the request was successful
-        with open(os.path.expanduser(f"~/bin/{filename}"), "w") as file:
+        file_path = os.path.expanduser(f"~/bin/{filename}")
+        if os.path.exists(file_path):
+            os.remove(file_path)  # Delete the existing file if it exists
+        with open(file_path, "w") as file:
             file.write(response.text)
+        os.chmod(file_path, 0o755)  # Change file permissions to 755
 
 import tempfile
 
