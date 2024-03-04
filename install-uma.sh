@@ -100,6 +100,28 @@ while IFS= read -r line; do
 
         # Deactivate the virtual environment
         deactivate || { echo "Error: Failed to deactivate the virtual environment."; exit_gracefully; }
+
+	# Deactivate the virtual environment
+	deactivate || { echo "Error: Failed to deactivate the virtual environment."; exit_gracefully; }
+
+	# Define the virtual environment directory
+	venv_dir=~/uma_installation_venv
+
+	# Delete the virtual environment
+	echo "Deleting the virtual environment..."
+	rm -rf "$venv_dir"
+
+	# Check to ensure the virtual environment directory is deleted
+	if [ -d "$venv_dir" ]; then
+    	    echo "Error: Failed to delete the virtual environment."
+   	    exit_gracefully
+	else
+    	    echo "Virtual environment deleted successfully."
+        fi
+
+
+
+
 	# Install required Python packages in the base Python environment
 	echo "Installing required Python packages in the base Python environment..."
 	if ! pip install -r ./requirements.txt > /dev/null 2>&1; then
