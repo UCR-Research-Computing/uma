@@ -120,13 +120,13 @@ echo "Copying 'uma' script to the installation location and setting permissions.
 
 # Check if 'uma' file exists in the installation location
 if [ -f "$install_location/uma" ]; then
-    echo "'uma' script already exists in the installation location."
+    echo "'uma' script already exists at $install_location ."
     echo "Please run 'uma -u' to update the app if needed."
     echo "Moving on with the installation process..."
 else
     # Copy 'uma' script to the installation location and set permissions
-    if ! cp ./uma "$install_location" && chmod 755 "$install_location/uma"; then
-        log_error "Failed to copy 'uma' script to the installation location or set permissions."
+    if ! cp ./uma "$install_location" || ! chmod 755 "$install_location/uma"; then
+        log_error "Failed to copy 'uma' script to the installation location or set permissions at $install_location."
         echo "Error: Failed to copy 'uma' script to the installation location or set permissions."
         exit_gracefully
     else
