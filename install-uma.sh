@@ -59,10 +59,11 @@ read -rp "Enter the installation location (default: ~/bin): " install_location
 # Use ~/bin as the default answer if no input is provided
 install_location=${install_location:-"$HOME/bin"}
 
-# Validate the installation location
+# Validate the installation location, create if it does not exist
 if [ ! -d "$install_location" ]; then
-    echo "Error: Installation location '$install_location' does not exist."
-    exit_gracefully
+    echo "Installation location '$install_location' does not exist. Attempting to create it..."
+    mkdir -p "$install_location" || { echo "Error: Failed to create installation location at '$install_location'."; exit_gracefully; }
+    echo "Installation location '$install_location' created successfully."
 fi
 
 # Append the chosen location to the user's PATH if it's not already there
