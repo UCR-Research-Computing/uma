@@ -23,8 +23,23 @@ import tempfile
 import time
 
 # Define a fixed file path for the session data
-session_file_path = "/home/forsythc/bin/session_data.txt"
 session_duration = 60  # 10 minutes in seconds
+
+
+# Get the user's home directory
+home_dir = os.path.expanduser("~")
+
+# Define the file name
+file_name = ".uma_session_data.txt"
+
+# Construct the file path
+session_file_path = os.path.join(home_dir, file_name)
+
+# Check if the file exists, and if not, create it with initial content
+if not os.path.exists(session_file_path):
+    with open(session_file_path, "w") as f:
+        f.write("Welcome to Ursa Major Ask\n")
+
 
 def initialize_session():
     global session_file_path
@@ -145,8 +160,8 @@ def run_ls_latr():
 
 def update_files():
     urls = {
-        "Ursa_Major_Ask": "https://raw.githubusercontent.com/UCR-Research-Computing/ursa_major_ask/main/Ursa_Major_Ask",
-        "prompts.py": "https://raw.githubusercontent.com/UCR-Research-Computing/ursa_major_ask/main/prompts.py"
+        "uma": "https://raw.githubusercontent.com/UCR-Research-Computing/uma/main/uma",
+        "prompts.py": "https://raw.githubusercontent.com/UCR-Research-Computing/uma/main/prompts.py"
     }
     for filename, url in urls.items():
         response = requests.get(url)
