@@ -159,23 +159,6 @@ def run_ls_latr():
     return ls_latr_output
 
 def update_files():
-    urls = {
-        "uma": "https://raw.githubusercontent.com/UCR-Research-Computing/uma/main/uma",
-        "prompts.py": "https://raw.githubusercontent.com/UCR-Research-Computing/uma/main/prompts.py"
-    }
-    for filename, url in urls.items():
-        response = requests.get(url)
-        response.raise_for_status()  # Ensure the request was successful
-        file_path = os.path.expanduser(f"~/bin/{filename}")
-        if os.path.exists(file_path):
-            os.remove(file_path)  # Delete the existing file if it exists
-        with open(file_path, "w") as file:
-            file.write(response.text)
-        os.chmod(file_path, 0o755)  # Change file permissions to 755
-
-import requests
-
-def update_files():
     # Determine the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
