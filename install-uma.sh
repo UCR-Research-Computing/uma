@@ -143,6 +143,8 @@ else
     fi
 fi
 
+chmod 755 "$install_location/uma"
+
 # Inform the user about the next steps
 echo "Copying 'prompts.py' to the installation location..."
 
