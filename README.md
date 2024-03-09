@@ -376,6 +376,8 @@ Below is a table showcasing practical examples of using Ursa Major Ask (UMA) for
 
 These examples illustrate the potential of UMA to significantly reduce the manual coding effort required for common research and data science tasks, as well as to facilitate high-performance computing workflows. By providing a natural language interface to generate scripts and automate processes, UMA empowers researchers and data scientists to focus more on their core work and less on the repetitive technical details.
 
+[![asciicast](https://asciinema.org/a/90TxCDKsi9v8T0ddyQKJxvOVV.svg)](https://asciinema.org/a/90TxCDKsi9v8T0ddyQKJxvOVV)
+
 ## Note
 
 This script is for educational and research purposes. It is not meant for production use.
