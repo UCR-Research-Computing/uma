@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Initialize conda
+source ~/miniconda3/etc/profile.d/conda.sh  # Adjust path as necessary
+
+# Activate the Conda environment
+conda activate uma
+
+# Run the uma script with arguments and stdin piped
+uma "$@" 
+
+# Deactivate the Conda environment
+conda deactivate
+

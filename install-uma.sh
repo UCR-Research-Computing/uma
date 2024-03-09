@@ -2,7 +2,7 @@
 
 # Function to check if pip is installed
 check_pip_installed() {
-    if ! command -v pip > /dev/null; then
+    if ! command -v pip3 > /dev/null; then
         local msg="pip is not installed or not found in PATH. Please install pip before running this script."
         echo "$msg"
         log_error "$msg"  # Assuming log_error function can handle a single argument
@@ -14,7 +14,7 @@ check_pip_installed() {
 package_installed() {
     local package="$1"
     local installed_packages
-    installed_packages=$(pip freeze)
+    installed_packages=$(pip3 freeze)
     if echo "$installed_packages" | grep -q "^$package=="; then
         return 0  # Package is installed
     else
@@ -24,7 +24,7 @@ package_installed() {
 
 # Function to install Python packages from requirements file
 install_python_packages() {
-    if pip install -r ./requirements.txt; then
+    if pip3 install -r ./requirements.txt; then
         echo "Python packages installed successfully."
     else
         echo "Error: Failed to install required Python packages."
@@ -89,65 +89,39 @@ fi
 echo "Installation location set to: $install_location"
 
 # Read the requirements file line by line
-while IFS= read -r line; do
-    package=$(echo "$line" | cut -d'=' -f1)  # Extract package name
-    if package_installed "$package"; then
-        echo "Package '$package' is already installed."
-    else
-        echo "Package '$package' is not installed."
+#while IFS= read -r line; do
+#    package=$(echo "$line" | cut -d'=' -f1)  # Extract package name
+#    if package_installed "$package"; then
+#        echo "Package '$package' is already installed."
+#    else
+#        echo "Package '$package' is not installed."
         # Create a virtual environment for the installation process
-        echo "Creating a virtual environment for the installation process..."
-        python3 -m venv ~/uma_installation_venv
+echo "Creating a virtual environment for the installation process..."
+#python3.9 -m venv ~/.uma-venv
+conda create -y -n uma python=3.9
 
-        # Activate the virtual environment
-        source ~/uma_installation_venv/bin/activate || { echo "Error: Failed to activate the virtual environment."; exit_gracefully; }
+# Activate the virtual environment
+#source ~/.uma-venv/bin/activate || { echo "Error: Failed to activate the virtual environment."; exit_gracefully; }
+#conda init
+# Initialize conda
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate uma || { echo "Error: Failed to activate the virtual environment."; exit_gracefully; }
 
-        # Install required Python packages in the virtual environment
-        echo "Installing required Python packages in the virtual environment..."
-        if ! pip install -r ./requirements.txt > /dev/null 2>&1; then
-            log_error "Failed to install required Python packages in the virtual environment."
-            exit_gracefully
-        fi
+# Install required Python packages in the virtual environment
+echo "Installing required Python packages in the virtual environment..."
+#if ! pip install -r ./requirements.txt > /dev/null 2>&1; then
+pip3 install --upgrade pip
 
-        echo "Python packages installed successfully in the virtual environment."
+if ! pip3 install -r ./requirements.txt ; then
+    log_error "Failed to install required Python packages in the virtual environment."
+    exit_gracefully
+fi
 
-        # Deactivate the virtual environment
-        deactivate || { echo "Error: Failed to deactivate the virtual environment."; exit_gracefully; }
+echo "Python packages installed successfully in the virtual environment."
 
-	# Deactivate the virtual environment
-	deactivate || { echo "Error: Failed to deactivate the virtual environment."; exit_gracefully; }
-
-	# Define the virtual environment directory
-	venv_dir=~/uma_installation_venv
-
-	# Delete the virtual environment
-	echo "Deleting the virtual environment..."
-	rm -rf "$venv_dir"
-
-	# Check to ensure the virtual environment directory is deleted
-	if [ -d "$venv_dir" ]; then
-    	    echo "Error: Failed to delete the virtual environment."
-   	    exit_gracefully
-	else
-    	    echo "Virtual environment deleted successfully."
-        fi
-
-
-
-
-	# Install required Python packages in the base Python environment
-	echo "Installing required Python packages in the base Python environment..."
-	if ! pip install -r ./requirements.txt > /dev/null 2>&1; then
-    	    log_error "Failed to install required Python packages in the base Python environment."
-    	    exit_gracefully
-	fi
-
-	echo "Installing required Python packages in the base Python environment complete" 
-
-
-        break  # Stop checking further packages
-    fi
-done < ./requirements.txt
+#        break  # Stop checking further packages
+#    fi
+#done < ./requirements.txt
 
 
 # Inform the user about the next steps
@@ -181,6 +155,15 @@ else
     echo "'prompts.py' copied successfully."
 fi
 
+# Copy 'UMA' to the installation location
+if ! cp ./UMA "$install_location" && chmod 755 "$install_location/UMA"; then
+    log_error "Failed to copy 'UMA' to the installation location or set permissions."
+    echo "Error: Failed to copy 'UMA' to the installation location or set permissions."
+    exit_gracefully
+else
+    echo "'UMA' copied successfully."
+fi
+
 # Check if the config file already exists
 if [ -f "$install_location/config.py" ]; then
     echo "Config file '$install_location/config.py' already exists."
@@ -210,4 +193,5 @@ fi
 
 # Inform the user that the setup is complete
 echo "Setup completed successfully."
+
 

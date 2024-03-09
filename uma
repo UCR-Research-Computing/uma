@@ -119,8 +119,21 @@ def save_to_file(result1, summary, file_extension):
     with open(file_name, 'w') as f:
         f.write(result1)
 
-def strip_triple_backticks(result1):
+def strip_triple_backticks_old(result1):
     return result1.strip('```')
+
+def strip_triple_backticks(result1):
+    # Split the result into lines
+    lines = result1.split('\n')
+
+    # Filter out any lines that contain triple backticks
+    filtered_lines = [line for line in lines if '```' not in line]
+
+    # Join the filtered lines back into a single string
+    result_without_backticks = '\n'.join(filtered_lines)
+
+    return result_without_backticks
+
 
 def run_script(filename):
     try:
@@ -221,25 +234,29 @@ def main(args, transcript_from_pipe=None):
         summary = generate_summary_as_filename(clean_result, prompts.director)
         file_name = f"{summary}.{stripped_file_extension}"
 
-        save_to_file(clean_result, summary, stripped_file_extension)
+        save_to_file(clean_result, summary, file_extension)
         #file_name = f"run.{stripped_file_extension}"
         run_script(file_name)
         print("completed running: " + file_name)
         exit()
     elif args.write:
-        transcript += "reply to script requests with only the code dont explain anything or y the code but do use the shebang as the first line."
-        result = call_gpt(transcript, prompts.director)
+        transcriptplus = f"{transcript} ignore other output charaterisctics and focus on Reply to requests with only the code for scripts and programs and when not asking for code or scripts than respond in a text response to be saved as a txt file extension or if the file format requested within the request itself us that extension. Don't explain anything or talk about the response or code just reply with the end result answer but do use the shebang as the first line when asked for a script."
+
+        result = call_gpt(transcriptplus, prompts.director)
         clean_result = result_code_cleaning(result)
-        file_extension = call_gpt(clean_result, prompts.script_detector)
-        stripped_file_extension = strip_dot(file_extension)
+        #file_extension = call_gpt(clean_result, prompts.script_detector)
+        #stripped_file_extension = strip_dot(file_extension)
+
+        file_extension = get_file_extension_from_content(result, transcriptplus)
 
                 # Generate a summary to use in the file name
-        summary = generate_summary_as_filename(clean_result, prompts.director)
-        file_name = f"{summary}.{stripped_file_extension}"
+        summary = generate_summary_as_filename(result, prompts.director)
+        #summary = get_file_extension_from_content(clean_result, prompts.director)
+        file_name = f"{summary}.{file_extension}"
 
 
-        save_to_file(clean_result, summary, stripped_file_extension)
-        file_name = f"run.{stripped_file_extension}"
+        save_to_file(clean_result, summary, file_extension)
+        #file_name = f"run.{stripped_file_extension}"
         print("File Written: " + file_name)
         exit()
     elif args.update:
@@ -271,14 +288,57 @@ def call_gpt_with_context(transcript, prompts_director):
     # Return or print the GPT response directly, without the history
     return response
 
+
+def get_file_extension_from_content(clean_result, request_context=""):
+    # Use AI to suggest a script type first
+    suggested_extension = call_gpt(clean_result, prompts.script_detector)
+
+    # Predefined list of common file extensions
+    common_extensions = [
+        'py', 'sh', 'pl', 'rb', 'md', 'html', 'js', 'css', 'txt', 'json', 'xml', 'csv', 'yml', 'yaml'
+    ]
+
+    # Check if the AI-suggested extension is in our list of common extensions
+    if suggested_extension in common_extensions:
+        return suggested_extension
+
+    # Fallback to manual checks if AI suggestion is not in the list
+    # Special handling based on context and content checks
+    if "markdown" in request_context.lower() or "md" in request_context.lower() or "```" in clean_result:
+        return 'md'
+    elif clean_result.strip().startswith("<!DOCTYPE html>") or "<html>" in clean_result:
+        return 'html'
+
+    # Check for a shebang line for scripts
+    first_line = clean_result.split('\n', 1)[0]
+    if first_line.startswith("#!"):
+        for interpreter in ['/bin/bash', '/usr/bin/env python', '/usr/bin/env bash', '/usr/bin/env perl', '/usr/bin/env ruby']:
+            if interpreter in first_line:
+                return 'sh'  # Default shell script if specific extension not determined
+
+    # Default to '.txt' if no other conditions are met or no common extension is suggested
+    return 'txt'
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Your script description.")
     parser.add_argument("transcript", nargs='*', type=str, help="Transcript of the conversation")
     parser.add_argument("-r", "--run", action='store_true', help="Run the generated script")
-    parser.add_argument("-w", "--write", action='store_true', help="Write the generated script")
     parser.add_argument("-u", "--update", action='store_true', help="Update Ursa_Major_Ask")
+
+    # Create a mutually exclusive group if you have options that shouldn't be used together, for example
+    # For this case, we're focusing on -w and its dependency --ext
+    group = parser.add_argument_group('Writing Options')
+    group.add_argument("-w", "--write", action='store_true', help="Write the generated script. Must be used with --ext.")
+    group.add_argument("--ext", type=str, help="Specify the file extension to use when saving the file with -w. This argument is required if -w is used.")
+
     args = parser.parse_args()
-    #main(args)
+
+    # Manual check for dependency
+    if args.write and not args.ext:
+        parser.error("--ext is required when -w is used.")
+    elif args.ext and not args.write:
+        parser.error("--ext can only be used with -w.")
 
     # Check for piped input
     if not sys.stdin.isatty():
