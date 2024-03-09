@@ -359,6 +359,23 @@ A detailed report on environmental data anomalies, aiding in early detection of 
 
 These examples illustrate UMA's capacity to simplify complex data tasks, from creation and analysis to visualization and reporting, across diverse domains with straightforward commands.
 
+Below is a table showcasing practical examples of using Ursa Major Ask (UMA) for research, data science work, and operations on HPC clusters using Slurm. These examples illustrate how UMA can be leveraged to automate and streamline various tasks right from the command line.
+
+| **Task Description** | **UMA Command Example** | **Explanation** |
+|----------------------|-------------------------|-----------------|
+| Generate a Python script for data cleaning | `UMA -r generate a Python script for cleaning dataset.csv` | UMA will create a Python script tailored for cleaning operations on `dataset.csv`, such as handling missing values or filtering data. |
+| Create a Slurm submission script for a Python analysis | `UMA -r create a Slurm submission script for running analysis.py on a GPU partition` | UMA generates a Slurm submission script to run `analysis.py` on a GPU partition, setting up necessary SBATCH directives for resource allocation. |
+| Analyze a CSV file and plot results with Python | `UMA -r analyze sales_data.csv and plot sales trends over time` | Given `sales_data.csv`, UMA produces a Python script that performs analysis on sales trends and generates a time series plot. |
+| Generate a machine learning model training script | `UMA -r generate a Python script to train a machine learning model on data.csv using scikit-learn` | UMA creates a Python script for training a machine learning model using scikit-learn library on the provided dataset, `data.csv`. |
+| Automate data fetching and preprocessing for research | `UMA -r write a Bash script to download dataset XYZ from source, extract it, and preprocess for analysis` | UMA crafts a Bash script to automate downloading, extracting, and preprocessing steps for a dataset, making it ready for analysis. |
+| Submit a batch job to Slurm for bioinformatics analysis | `UMA -r create and submit a Slurm job for running genome_analysis_tool on genome_data.fasta` | UMA generates and submits a Slurm job script to run a specific bioinformatics tool on `genome_data.fasta`, handling job submission intricacies. |
+| Visualize geographical data using Python and matplotlib | `UMA -r generate a script to plot geographical data from locations.csv on a map` | UMA will produce a Python script that takes geographical data from `locations.csv` and visualizes it on a map using matplotlib or a similar library. |
+| Compile and run a simulation on a HPC cluster | `UMA -r compile my_simulation_code.c using MPI and submit to Slurm with specific resource requirements` | UMA prepares and submits a Slurm job to compile and run a C-based simulation code using MPI, specifying resources like CPUs, memory, etc. |
+| Create a Nextflow workflow for RNA-Seq analysis | `UMA -r create a Nextflow workflow script for RNA-Seq analysis using FastQC, STAR, and HTSeq` | UMA generates a script for a comprehensive RNA-Seq analysis pipeline using Nextflow, incorporating tools like FastQC, STAR, and HTSeq for various analysis steps. |
+| Automate report generation from analysis results | `UMA -r write a script to generate a PDF report from the results in analysis_output.txt` | UMA composes a script to take results from `analysis_output.txt` and automatically generate a detailed report in PDF format, possibly using Python with libraries like ReportLab. |
+
+These examples illustrate the potential of UMA to significantly reduce the manual coding effort required for common research and data science tasks, as well as to facilitate high-performance computing workflows. By providing a natural language interface to generate scripts and automate processes, UMA empowers researchers and data scientists to focus more on their core work and less on the repetitive technical details.
+
 ## Note
 
 This script is for educational and research purposes. It is not meant for production use.
