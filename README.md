@@ -1,61 +1,43 @@
-# Ursa Major Ask
+# Ursa Major Ask (UMA)
 
-The Ursa Major Ask is a powerful tool that leverages OpenAI's GPT-3.5-turbo to simulate a chat with a fictional 'Director of Research Computing' character who is an expert in Google's Ursa Major platform. 
+UMA is a powerful tool that leverages OpenAI's GPT-3.5-turbo to simulate a chat with a fictional 'Director of Research Computing' character who is an expert in Google's Ursa Major platform. 
 
 It can generate and run code including research software and Slurm submission scripts.
 
-## Getting Started
+# Ursa Major Ask (UMA)
 
-To get started, you will need to clone this repository and install the required dependencies.
+Ursa Major Ask (UMA) is a powerful command-line interface (CLI) tool that leverages the capabilities of OpenAI's GPT language model. It allows you to interact with the AI system using natural language, enabling you to generate scripts, code, text files, and more with ease.
 
-## Prerequisites
+## Features
 
-The primary dependencies for this project are:
-
-- Python 3.7 or higher
-- OpenAI API Python lib >= 0.27.2
-
-Use the following command to install the OpenAI client:
-
-```
-pip install -r requirements.txt
-
-# requirements.txt
-openai>=0.27.2
-```
-Ensure that you have the OpenAI API key. Set this key in your environment variables or in the `config.py` file. 
+- **Script Generation**: UMA can generate scripts in various programming languages, such as Python, Bash, Perl, and Ruby, based on your natural language requests.
+- **Text File Generation**: In addition to scripts, UMA can create text files with any desired content, making it useful for tasks like documentation, notes, or code snippets.
+- **Contextual Understanding**: UMA maintains a session history, enabling the AI to provide contextually relevant responses based on the conversation's flow.
+- **Command-Line Interface**: UMA is a CLI tool, making it easy to integrate into your existing workflow and automate tasks with scripts or shell commands.
 
 ## Installation
-TLDR this is the quick install
+
+To install UMA, you'll need Python 3.6 or later and pip (the Python package installer). Clone the repository and install the required dependencies:
+
 ```bash
-curl -L https://raw.githubusercontent.com/UCR-Research-Computing/ursa_major_ask/main/install.sh | bash
+git clone https://github.com/UCR-Research-Computing/uma.git
+cd uma
+./install-uma.sh
 ```
 
-This section provides instructions on how to install and setup Ursa_Major_Ask on your system. 
+This section provides instructions on how to install and setup UMA on your system. 
 
-An `install.sh` script is included in the repository to automate the installation process. Here are the steps that the script performs:
+An `install-uma.sh` script is included in the repository to automate the installation process. Here are the steps that the script performs:
 
-1. **Create a 'bin' folder in your home directory**: This folder will be used to store the Ursa_Major_Ask script.
+1. **Create a 'bin' folder in your home directory**: This folder will be used to store the UMA script.
 
-2. **Copy the Ursa_Major_Ask script to the 'bin' folder**: The script will be available in your 'bin' folder after this step.
+2. **Copy the UMA script to the 'bin' folder**: The script will be available in your 'bin' folder after this step.
 
-3. **Set the permissions for the script**: The permissions for the Ursa_Major_Ask script are set to 755, making it executable.
+3. **Set the permissions for the script**: The permissions for the UMA script are set to 755, making it executable.
 
-4. **Add the 'bin' folder to your PATH**: This allows you to run the Ursa_Major_Ask script from anywhere on your system without having to specify the full path to the script.
+4. **Add the 'bin' folder to your PATH**: This allows you to run the UMA script from anywhere on your system without having to specify the full path to the script.
 
 5. **Install the required Python packages**: The script uses the pip package manager to install the required Python packages listed in the `requirements.txt` file.
-
-To run the installation script, navigate to the directory containing the script and execute the following command:
-
-```bash
-./install.sh
-```
-
-Please note that you may need to give the `install.sh` script execute permissions. You can do this with the following command:
-
-```bash
-chmod +x install.sh
-```
 
 ### Configuring the OpenAI API key
 
@@ -70,44 +52,45 @@ openai_key = "your-openai-api-key"
 
 Replace "your-openai-api-key" with your actual OpenAI API key.
 
-Congratulations! You have now successfully installed Ursa_Major_Ask on your system. Enjoy the power of AI-based scripting at your fingertips.
+Congratulations! You have now successfully installed UMA on your system. Enjoy the power of AI-based scripting at your fingertips.
 
 ## Usage
 
 You can run the script from the command line with the following command:
 
 ```bash
-usage: Ursa_Major_Ask [-h] [-r] [-w] [transcript ...]
+usage: uma [-h] [-r] [-u] [-w] [--ext EXT] [transcript ...]
+
+Your script description.
 
 positional arguments:
-  transcript   Transcript of the conversation
+  transcript           Transcript of the conversation
 
 options:
-  -h, --help   show this help message and exit
-  -r, --run    Run the generated script
-  -w, --write  Write the generated script
-
-example:
-Ursa_Major_Ask your text here
+  -h, --help           show this help message and exit
+  -r, --run            Run the generated script
+  -u, --update         Update Ursa_Major_Ask
+  
+Writing Options:
+  -w, --write          Write the generated script. Must be used with --ext.
+  --ext EXT            Specify the file extension to use when saving the file with -w. This argument is required if -w is used.
 ```
 
-Replace "your text here" with your desired questions.
+# Running Generated Scripts with UMA
 
-# Running Generated Scripts with Ursa_Major_Ask
+One of the truly unique and powerful features of UMA is the `-r` or `--run` option. This option allows you to simply describe what you want to accomplish, and UMA will generate the appropriate script or code to achieve that task and execute it for you, all in one command.
 
-One of the truly unique and powerful features of Ursa_Major_Ask is the `-r` or `--run` option. This option gives you the incredible ability not only to have the AI generate code based on your requests, but also to execute the created script, providing you with immediate, actionable results.
+## Real-Time Code Generation and Execution
 
-## Real-Time Code Execution
-
-Imagine having a conversation with an AI that not only understands your coding needs but also executes them in real time. With the `-r` or `--run` option, that's precisely what you get. No longer do you just get the code; you can execute it within the same environment.
+With the `-r` option, you no longer need to explicitly ask UMA to "write a script" or specify the programming language. Instead, you can simply describe your desired task or objective, and UMA will intelligently determine the best approach, generate the necessary code, and execute it in real time.
 
 ```bash
-Ursa_Major_Ask -r write a Python script that prints Hello, World
+UMA -r print Hello, World
 ```
-The command above generates a Python script that prints 'Hello, World!' and immediately executes it, outputting 'Hello, World!' to the console.
+The command above will generate a script (likely a Python script) that prints 'Hello, World!' and immediately execute it, outputting 'Hello, World!' to the console.
 
 ```bash
-Ursa_Major_Ask -r write a script that prints fibonacci numbers up to 10000
+UMA -r calculate and print the fibonacci numbers up to 10000
 ```
 ```
 Fibonacci Series up to 10000:
@@ -137,53 +120,49 @@ Here are a few examples that involve high performance computing (HPC) with Slurm
 
 1. **Running a Job on a Slurm Managed HPC Cluster**
 
-   Let's assume you want to submit a job that runs a Python script on your HPC cluster. You could use Ursa_Major_Ask to generate and execute a Slurm script for you:
+   Instead of asking UMA to generate a Slurm script, you can simply request the desired outcome:
 
    ```bash
-   Ursa_Major_Ask -r "Generate and run a Slurm script that runs a Python script called 'my_analysis.py' on a cluster with a partition named 'research'."
+   UMA -r run the Python script 'my_analysis.py' on the 'research' partition of the HPC cluster
    ```
 
-   Ursa_Major_Ask will generate a Slurm script to submit a job that runs 'my_analysis.py' on the 'research' partition of your cluster, and then it will execute the script to submit the job.
+   UMA will generate the appropriate Slurm script to submit a job that runs 'my_analysis.py' on the 'research' partition of your cluster, and then execute the script to submit the job.
 
 2. **Automating a Genomics Pipeline**
 
-   Imagine you are conducting genomics research and you need to automate a pipeline that involves multiple tools such as FastQC, Trimmomatic, and HISAT2. You could request:
+   Imagine you need to automate a genomics pipeline involving multiple tools:
 
    ```bash
-   Ursa_Major_Ask -r "Generate and run a Bash script that runs FastQC on 'sample.fastq', trims the adapters using Trimmomatic, and then aligns the reads to the 'reference.fa' genome using HISAT2."
+   UMA -r run FastQC on 'sample.fastq', trim adapters using Trimmomatic, and then align the reads to the 'reference.fa' genome using HISAT2
    ```
 
-   Ursa_Major_Ask will generate a Bash script that runs FastQC on 'sample.fastq', trims the adapters using Trimmomatic, and aligns the reads to 'reference.fa' using HISAT2. It will then run this script for you.
+   UMA will generate a Bash script that performs the specified tasks and then run this script for you.
 
 3. **Creating and Running a Bioinformatics Workflow with Nextflow**
 
-   If you need to create and run a bioinformatics workflow with Nextflow, you could ask Ursa_Major_Ask something like:
-
    ```bash
-   Ursa_Major_Ask -r "Generate and run a Nextflow script that takes as input 'reads.fastq', runs FastQC for quality control, uses Trimmomatic for trimming, aligns with BWA, and finally calls variants with FreeBayes."
+   UMA -r create and run a Nextflow workflow that takes 'reads.fastq' as input, runs FastQC for quality control, trims with Trimmomatic, aligns with BWA, and calls variants with FreeBayes
    ```
 
-   Ursa_Major_Ask would create a Nextflow script that performs the specified workflow and then execute this script to start the workflow.
+   UMA would create a Nextflow script that performs the specified workflow and then execute this script to start the workflow.
 
-These examples show how Ursa_Major_Ask can be used in a scientific research setting, helping to automate tasks related to HPC and genomics research. The possibilities are endless, and
-
- Ursa_Major_Ask's utility extends as far as your needs and creativity can take it.
+These examples demonstrate how UMA can be used in a scientific research setting, helping to automate tasks related to HPC and genomics research by simply describing your desired outcome. The possibilities are endless, and UMA's utility extends as far as your needs and creativity can take it.
 
 ## Unleashing Endless Possibilities
 
-This ability is more than a convenience—it's a game-changer. Whether you're creating a Python script, a Bash shell script, or even a complex data analysis pipeline, Ursa_Major_Ask can generate and execute it for you. You can leverage the full power of the OpenAI model, GPT-3.5-turbo, to analyze data, automate tasks, or even write software—all within a single command.
+This ability is more than a convenience—it's a game-changer. Whether you need to create a Python script, a Bash shell script, or even a complex data analysis pipeline, UMA can generate and execute it for you by simply understanding your requirements. You can leverage the full power of the OpenAI model, GPT-3.5-turbo, to analyze data, automate tasks, or even write software—all within a single command.
 
-Moreover, since Ursa_Major_Ask can take any text file as an input, the possibilities are virtually limitless. You could feed it a data file and ask it to perform data analysis, input a requirements document and ask it to write the corresponding code, or provide a bug report and ask it to debug and fix the code for you.
+Moreover, since UMA can take any text file as an input, the possibilities are virtually limitless. You could feed it a data file and ask it to perform data analysis, input a requirements document and ask it to write the corresponding code, or provide a bug report and ask it to debug and fix the code for you.
 
-With Ursa_Major_Ask, you are not just talking about code—you are bringing it to life, turning ideas into actions and solutions in a matter of seconds. Code generation and execution have never been so accessible and intuitive. It's not just a coding tool; it's your AI-powered coding assistant that understands your needs and acts on them in real time.
+With UMA, you are not just talking about code—you are bringing it to life, turning ideas into actions and solutions in a matter of seconds. Code generation and execution have never been so accessible and intuitive. It's not just a coding tool; it's your AI-powered coding assistant that understands your needs and acts on them in real time.
 
-Unlock the full potential of your programming prowess with the power of Ursa_Major_Ask.
+Unlock the full potential of your programming prowess with the power of UMA.
 
 ## Powerful File Input and Data Analysis
 
-`Ursa_Major_Ask` isn't just designed to accept file input – it's built to harness the full potential of OpenAI's GPT-3 model, enabling sophisticated analysis and interpretation of the data you feed into it. This elevates `Ursa_Major_Ask` from a mere command-line tool to a versatile solution for a wide range of data processing tasks.
+UMA isn't just designed to accept file input – it's built to harness the full potential of OpenAI's GPT-3 model, enabling sophisticated analysis and interpretation of the data you feed into it. This elevates UMA from a mere command-line tool to a versatile solution for a wide range of data processing tasks.
 
-Whether you are dealing with scripts, structured text files, or raw data, `Ursa_Major_Ask` can process it, and utilize the language understanding capabilities of GPT-3 to provide meaningful insights.
+Whether you are dealing with scripts, structured text files, or raw data, UMA can process it, and utilize the language understanding capabilities of GPT-3 to provide meaningful insights.
 
 The power of this approach lies in its versatility. You are not limited to scripts or programming languages; you can feed in any type of text file and let the model analyze it based on the question you ask.
 
@@ -192,30 +171,30 @@ The power of this approach lies in its versatility. You are not limited to scrip
 1. **Analyzing a CSV data file**: If you have a CSV file, `sales_data.csv`, containing sales data for a period, you could ask:
 
     ```
-    Ursa_Major_Ask analyze the sales trend "$(cat sales_data.csv)"
+    UMA analyze the sales trend < sales_data.csv
     ```
-    `Ursa_Major_Ask` will provide you with an interpretation of the sales trend based on the data in the file.
+    UMA will provide you with an interpretation of the sales trend based on the data in the file.
 
 2. **Understanding Log Files**: You have a log file, `server.log`, and you want to know about any critical errors. You can ask:
 
     ```
-    Ursa_Major_Ask find critical errors "$(cat server.log)"
+    UMA find critical errors < server.log
     ```
     The command-line tool will provide a summary of the critical errors found in the log file.
 
 3. **Interpreting Complex XML or JSON data**: You can even feed complex XML or JSON files. For instance, with a complex JSON data file `user_data.json`, you might want to understand the user behavior it signifies:
 
     ```
-    Ursa_Major_Ask interpret user behavior "$(cat user_data.json)"
+    UMA interpret user behavior < user_data.json
     ```
-    `Ursa_Major_Ask` will then provide an interpretation of the user behavior based on the data.
+    UMA will then provide an interpretation of the user behavior based on the data.
 
 
-Remember, `Ursa_Major_Ask` is as powerful and versatile as the questions you ask and the data you feed. It leverages the robustness of OpenAI's GPT-3 model to analyze, understand, and provide insights on a wide array of data. 
+Remember, UMA is as powerful and versatile as the questions you ask and the data you feed. It leverages the robustness of OpenAI's GPT-3 model to analyze, understand, and provide insights on a wide array of data. 
 
 ---
 
-Please note that the file paths in these examples are relative. If your files are in different directories, be sure to include the correct paths. Also, ensure the data or text you're feeding into `Ursa_Major_Ask` does not contain sensitive or personal information, as it will be processed by an external AI model.
+Please note that the file paths in these examples are relative. If your files are in different directories, be sure to include the correct paths. Also, ensure the data or text you're feeding into UMA does not contain sensitive or personal information, as it will be processed by an external AI model.
 
 ## Note
 
@@ -232,7 +211,4 @@ We welcome contributions to improve this project. Please feel free to create an 
 ## Contact
 
 For any queries, please reach out to us at research-computing@ucr.edu.
-
-
-
-
+```
