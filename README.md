@@ -1,12 +1,8 @@
 # Ursa Major Ask (UMA)
 
-UMA is a powerful tool that leverages OpenAI's GPT-3.5-turbo to simulate a chat with a fictional 'Director of Research Computing' character who is an expert in Google's Ursa Major platform. 
+Ursa Major Ask (UMA) is a powerful command-line interface (CLI) tool that leverages the capabilities of OpenAI's GPT language model. It allows you to interact with the AI system using natural language, enabling you to generate scripts, code, text files, and more with ease.
 
 It can generate and run code including research software and Slurm submission scripts.
-
-# Ursa Major Ask (UMA)
-
-Ursa Major Ask (UMA) is a powerful command-line interface (CLI) tool that leverages the capabilities of OpenAI's GPT language model. It allows you to interact with the AI system using natural language, enabling you to generate scripts, code, text files, and more with ease.
 
 ## Features
 
@@ -25,8 +21,6 @@ cd uma
 ./install-uma.sh
 ```
 
-This section provides instructions on how to install and setup UMA on your system. 
-
 An `install-uma.sh` script is included in the repository to automate the installation process. Here are the steps that the script performs:
 
 1. **Create a 'bin' folder in your home directory**: This folder will be used to store the UMA script.
@@ -37,7 +31,7 @@ An `install-uma.sh` script is included in the repository to automate the install
 
 4. **Add the 'bin' folder to your PATH**: This allows you to run the UMA script from anywhere on your system without having to specify the full path to the script.
 
-5. **Install the required Python packages**: The script uses the pip package manager to install the required Python packages listed in the `requirements.txt` file.
+5. **Install the required Python packages**: Create a conda environment named 'uma' and install the required Python packages: The script creates a conda environment named 'uma' and uses pip to install the required Python packages listed in the requirements.txt file within this environment.
 
 ### Configuring the OpenAI API key
 
