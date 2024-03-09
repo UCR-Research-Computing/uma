@@ -33,27 +33,53 @@ An `install-uma.sh` script is included in the repository to automate the install
 
 5. **Install the required Python packages**: Create a conda environment named 'uma' and install the required Python packages: The script creates a conda environment named 'uma' and uses pip to install the required Python packages listed in the requirements.txt file within this environment.
 
+
+---
+
 ### Configuring the OpenAI API key
 
-Once the installation process is complete, you'll need to create a `config.py` file in your `bin` directory. This file will contain your OpenAI API key. 
+During the installation process, the script checks for an existing configuration file (`config.py`) to determine if your OpenAI API key has already been set. Here's what happens:
 
-Here is a sample `config.py` file:
+- **If a Configuration File Exists:** The script detects that your setup is potentially complete and does not modify your existing configuration. This precaution helps in preserving any pre-existing settings, including the OpenAI API key.
 
-```python
-# config.py
-openai_key = "your-openai-api-key"
-```
+- **Initial Setup:** If the configuration file is not found, the script assumes a fresh setup. You will be prompted to enter your OpenAI API key. This key is essential for your application's communication with OpenAI's services.
 
-Replace "your-openai-api-key" with your actual OpenAI API key.
+  - **Providing the API Key:** Upon prompt, entering your API key directly configures your application for immediate use.
+  
+  - **Using a Placeholder:** If you skip entering the API key, a placeholder is set. You'll need to update this with your actual API key later for the application to function correctly.
 
-Congratulations! You have now successfully installed UMA on your system. Enjoy the power of AI-based scripting at your fingertips.
+### How to Update the OpenAI API Key
+
+If you initially used a placeholder or need to update your OpenAI API key, follow these steps to edit the `config.py` file within your installation directory:
+
+1. **Locate the Configuration File:** Navigate to the installation directory where your `config.py` file is located. This path was specified during the installation and is referenced as `$install_location`.
+
+2. **Edit the Configuration File:** Open the `config.py` file in a text editor of your choice. For example, using a terminal-based editor like `nano`, you can execute:
+   ```bash
+   nano $install_location/config.py
+   ```
+   Replace `$install_location` with the actual path to your installation directory.
+
+3. **Update the API Key:** Within the `config.py` file, locate the line containing `OPENAI_API_KEY = "your-openapi-key"`. Replace `"your-openapi-key"` with your actual OpenAI API key enclosed in quotes. For example:
+   ```python
+   OPENAI_API_KEY = "sk-abcdef1234567890"
+   ```
+   Ensure to save your changes before closing the editor.
+
+4. **Save and Close:** After updating the API key, save the file and exit the text editor. If using `nano`, press `CTRL + O` to save, then `Enter`, followed by `CTRL + X` to exit.
+
+### Verifying the Configuration
+
+Once you've updated the `config.py` file with your OpenAI API key, your application is ready to communicate with OpenAI's services. It's a good practice to verify the configuration by running a simple test or operation that requires API access, ensuring everything is set up correctly.
+
+---
 
 ## Usage
 
 You can run the script from the command line with the following command:
 
 ```bash
-usage: uma [-h] [-r] [-u] [-w] [--ext EXT] [transcript ...]
+usage: UMA [-h] [-r] [-u] [-w] [--ext EXT] [transcript ...]
 
 Your script description.
 
