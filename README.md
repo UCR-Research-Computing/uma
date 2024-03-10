@@ -34,6 +34,9 @@ An `install-uma.sh` script is included in the repository to automate the install
 5. **Install the required Python packages**: Create a conda environment named 'uma' and install the required Python packages: The script creates a conda environment named 'uma' and uses pip to install the required Python packages listed in the requirements.txt file within this environment.
 
 
+[![asciicast](https://asciinema.org/a/646163.svg)](https://asciinema.org/a/646163)
+
+
 ---
 
 ### Configuring the OpenAI API key
