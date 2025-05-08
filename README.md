@@ -11,6 +11,15 @@ It can generate and run code including research software and Slurm submission sc
 - **Contextual Understanding**: UMA maintains a session history, enabling the AI to provide contextually relevant responses based on the conversation's flow.
 - **Command-Line Interface**: UMA is a CLI tool, making it easy to integrate into your existing workflow and automate tasks with scripts or shell commands.
 
+## Documentation
+
+- Quickstart guide: docs/QUICKSTART.md
+- Detailed reference: docs/REFERENCE.md
+- Generate HTML docs from docstrings:
+
+  pip install -r docs/requirements.txt
+  pdoc --html uma --output-dir docs/html --force
+
 ## Installation
 
 To install UMA, you'll need Python 3.6 or later and pip (the Python package installer). Clone the repository and install the required dependencies:
